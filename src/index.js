@@ -31,6 +31,10 @@ export default (apiUrl, httpClient = fetchJson) => {
       case GET_LIST: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
+
+        const rangeStart = (page - 1) * perPage;
+        const rangeEnd = page * perPage - 1;
+
         const query = {};
         query['where'] = {...params.filter};
         if (field) query['order'] = [field + ' ' + order];
@@ -42,6 +46,10 @@ export default (apiUrl, httpClient = fetchJson) => {
             query[key] = params[key];
         });
         url = `${apiUrl}/${resource}?${stringify({filter: JSON.stringify(query)})}`;
+        options.headers = new Headers({
+          Range: `${resource}=${rangeStart}-${rangeEnd}`
+        });
+
         break;
       }
       case GET_ONE:
@@ -65,6 +73,10 @@ export default (apiUrl, httpClient = fetchJson) => {
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
+
+        const rangeStart = (page - 1) * perPage;
+        const rangeEnd = page * perPage - 1;
+
         const query = {};
         query['where'] = {...params.filter};
         query['where'][params.target] = params.id;
@@ -78,6 +90,10 @@ export default (apiUrl, httpClient = fetchJson) => {
         });
 
         url = `${apiUrl}/${resource}?${stringify({filter: JSON.stringify(query)})}`;
+        options.headers = new Headers({
+          Range: `${resource}=${rangeStart}-${rangeEnd}`
+        });
+
         break;
       }
       case UPDATE:
