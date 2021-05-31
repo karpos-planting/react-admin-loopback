@@ -10,6 +10,7 @@ const fetchJson = async (url, options = {}) => {
   if (options.user && options.user.authenticated && options.user.token) {
     requestHeaders.set('Authorization', options.user.token);
   }
+  requestHeaders.set('Access-Control-Expose-Headers', 'Content-Range');
   const response = await fetch(url, { ...options, headers: requestHeaders })
   const text = await response.text()
   const o = {
