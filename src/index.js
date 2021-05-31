@@ -47,7 +47,7 @@ export default (apiUrl, httpClient = fetchJson) => {
         });
         url = `${apiUrl}/${resource}?${stringify({filter: JSON.stringify(query)})}`;
         options.headers = new Headers({
-          Range: `${resource}=${rangeStart}-${rangeEnd}`
+          'Range': `${resource}=${rangeStart}-${rangeEnd}`
         });
 
         break;
@@ -91,7 +91,7 @@ export default (apiUrl, httpClient = fetchJson) => {
 
         url = `${apiUrl}/${resource}?${stringify({filter: JSON.stringify(query)})}`;
         options.headers = new Headers({
-          Range: `${resource}=${rangeStart}-${rangeEnd}`
+          'Range': `${resource}=${rangeStart}-${rangeEnd}`
         });
 
         break;
